@@ -10,15 +10,24 @@ I modified this project into an API via Docker to be consumed by my [StickerBot]
 
 ## Installation
 
-1. Clone this repository.
-2. Navigate into the repo directory: `cd meme-caption`.
-3. Build the Docker image: `docker build -t meme-caption .`
+1. Clone this repository:
+```bash
+git clone https://github.com/juniorkrz/meme-caption
+```
+2. Navigate into the repo directory:
+```bash
+cd meme-caption
+```
+3. Build the Docker image:
+```bash
+docker build -t meme-caption .
+```
 4. Run the Docker container:
-   ```bash
-   docker run -d --name meme-caption -p 8000:8000 meme-caption
-   ```
+```bash
+docker run -d --name meme-caption -p 8000:8000 meme-caption
+```
 
-   This will start an API at `http://localhost:8000`.
+This will start an API at `http://localhost:8000`.
 
 ## Usage
 
@@ -35,4 +44,4 @@ curl -X POST "http://localhost:8000/addCaption" \
 -F "file=@/caminho/para/sua/imagem.jpg"
 ```
 
-![Example Result](http://blog.lipsumarium.com/assets/img/posts/2017-07-22-caption-memes-in-python/out.jpg)
+![Example Result](./example/out.jpeg)
