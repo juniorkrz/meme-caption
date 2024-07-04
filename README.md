@@ -1,27 +1,38 @@
-# Meme caption generator
+# Meme Caption Generator API
 
-> Add text captions (top and bottom) to images using command line
+> Add text captions (top and bottom) to images using command line.
 
-Bog post: <http://blog.lipsumarium.com/caption-memes-in-python/>
+Blog post: [Caption Memes in Python](http://blog.lipsumarium.com/caption-memes-in-python/)
 
-## Install
+## Why an API?
 
-1. Clone this repository
-2. `cd` into the repo directory
-3. Run `python meme.py images/Success-Kid.jpg "Top text here" "Bottom text here" out.jpg`
+I modified this project into an API via Docker to be consumed by my [StickerBot](https://github.com/juniorkrz/stickerbot).
 
-This should create a `out.jpg` image with your caption.
+## Installation
+
+1. Clone this repository.
+2. Navigate into the repo directory: `cd meme-caption`.
+3. Build the Docker image: `docker build -t meme-caption .`
+4. Run the Docker container:
+   ```bash
+   docker run -d --name meme-caption -p 8000:8000 meme-caption
+   ```
+
+   This will start an API at `http://localhost:8000`.
 
 ## Usage
 
-```bash
-python meme.py <imageFilePath> "<topCaption>" "<bottomCaption>" <outputFile>
+- Visit `http://localhost:8000/docs` to interact with the API using Swagger UI.
+- Use `http://localhost:8000/addCaption` to access the API endpoint.
+
+### Example
+
+```curl
+curl -X POST "http://localhost:8000/addCaption" \
+-H "Content-Type: multipart/form-data" \
+-F "topText=TOP_TEXT_HERE" \
+-F "bottomText=BOTTOM_TEXT_HERE" \
+-F "file=@/caminho/para/sua/imagem.jpg"
 ```
 
-Example:
-
-```bash
-python meme.py images/i-dont-always.jpg "i don't always make memes" "but when i do I use python" out.jpg
-```
-
-![example result](http://blog.lipsumarium.com/assets/img/posts/2017-07-22-caption-memes-in-python/out.jpg)
+![Example Result](http://blog.lipsumarium.com/assets/img/posts/2017-07-22-caption-memes-in-python/out.jpg)
