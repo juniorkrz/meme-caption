@@ -16,48 +16,46 @@ def add_text_to_image(image_path, top_text=None, bottom_text=None):
         def draw_text(msg, pos):
             print(f"Drawing text: {msg}, Position: {pos}")
 
-            # Inicializa o tamanho da fonte
-            fontSize = 72
+            # Initialize font size
+            font_size = 72
 
-            # Carrega a fonte
-            font = ImageFont.truetype(font_path, fontSize)
+            # Load font
+            font = ImageFont.truetype(font_path, font_size)
 
-            # Calcula a largura da imagem com margem de 1% para ajuste
-            imgWidthWithPadding = img.width * 0.99
+            # Calculate image width with 1% padding adjustment
+            img_width_with_padding = img.width * 0.99
 
-            # Reduz o tamanho da fonte até que o texto caiba na imagem
-            while draw.textlength(msg, font=font) > imgWidthWithPadding:
-                fontSize -= 2
-                font = ImageFont.truetype(font_path, fontSize)
+            # Reduce font size until text fits within the image
+            while draw.textlength(msg, font=font) > img_width_with_padding:
+                font_size -= 2
+                font = ImageFont.truetype(font_path, font_size)
 
-            # Divide o texto em linhas
+            # Split text into lines
             lines = []
             words = msg.split()
             line = ""
             for word in words:
-                if draw.textlength(line + word, font=font) < imgWidthWithPadding:
+                if draw.textlength(line + word, font=font) < img_width_with_padding:
                     line += word + " "
                 else:
                     lines.append(line.strip())
                     line = word + " "
             lines.append(line.strip())
 
-            # Determina a posição inicial do texto baseado na posição desejada
-            textY = 10 if pos == "top" else img.height - (len(lines) * (fontSize + 10)) - 10
+            # Determine initial text position based on desired position
+            text_y = 10 if pos == "top" else img.height - (len(lines) * (font_size + 10)) - 10
 
-            # Desenha o texto com sombra
+            # Draw text with shadow
             for line in lines:
                 w = draw.textlength(line, font=font)
-                h = fontSize
-                textX = (img.width - w) / 2
+                h = font_size
+                text_x = (img.width - w) / 2
 
-                draw.text((textX-2, textY-2), line, font=font, fill="black")
-                draw.text((textX+2, textY-2), line, font=font, fill="black")
-                draw.text((textX-2, textY+2), line, font=font, fill="black")
-                draw.text((textX+2, textY+2), line, font=font, fill="black")
+                for dx, dy in [(-2, -2), (2, -2), (-2, 2), (2, 2)]:
+                    draw.text((text_x + dx, text_y + dy), line, font=font, fill="black")
 
-                draw.text((textX, textY), line, font=font, fill="white")
-                textY += h + 10  # Espaçamento entre linhas
+                draw.text((text_x, text_y), line, font=font, fill="white")
+                text_y += h + 10  # Line spacing
 
         if top_text:
             draw_text(top_text.upper(), "top")

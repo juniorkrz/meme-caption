@@ -1,6 +1,6 @@
 # Meme Caption Generator API
 
-> Add text captions (top and bottom) to images using command line.
+> Add text captions (top and bottom) to images using an API.
 
 Blog post: [Caption Memes in Python](http://blog.lipsumarium.com/caption-memes-in-python/)
 
